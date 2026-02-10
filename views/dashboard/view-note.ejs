@@ -1,0 +1,145 @@
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+
+  <div class="row mb-4">
+    <div class="col">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/dashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">
+            <%= note.title %>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Header -->
+      <div class="col d-flex justify-content-between align-items-center">
+        <h1 class="h3">View Note</h1>
+
+        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Update Note Form -->
+  <form action="/dashboard/item/<%= noteID %>?_method=PUT" method="POST" enctype="multipart/form-data"
+    class="position-relative">
+
+    <!-- Title -->
+    <div class="form-group mb-4 position-absolute" style="left:1px; top:1px; right: 1px;">
+      <input type="text" class="form-control fw-bold border-0 fs-4" name="title" value="<%= note.title %>" required>
+    </div>
+
+    <!-- Body -->
+    <div class="form-group mb-4">
+      <textarea class="form-control pt-5 fs-4" name="body" rows="12" required><%= note.body %></textarea>
+    </div>
+
+
+    <!-- Existing Attachment -->
+    <% if (note.attachment && note.attachment.filePath) { %>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">
+          Current Attachment
+        </label>
+        <br>
+
+        <a href="<%= note.attachment.filePath %>" target="_blank" class="btn btn-outline-secondary btn-sm">
+          📎 <%= note.attachment.originalName %>
+        </a>
+      </div>
+
+      <% } %>
+
+
+        <!-- Replace / Upload -->
+        <div class="form-group mb-4">
+
+          <label class="form-label fw-semibold">
+            Replace / Attach File
+          </label>
+
+          <input type="file" name="media" class="form-control" accept="image/*,application/pdf,video/*">
+
+          <small class="text-muted">
+            Allowed: Images, PDF, Video (Max ~20MB)
+          </small>
+
+        </div>
+
+
+        <!-- Submit -->
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-lg">
+            Update Note
+          </button>
+        </div>
+
+  </form>
+
+</div>
+
+
+
+<!-- Delete Modal -->
+<div class="modal fade" tabindex="-1" id="deleteModal">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          Delete Note
+        </h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <p>
+          This will permanently delete
+          <b>
+            <%= note.title %>
+          </b>
+          <br>
+          Are you sure?
+        </p>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+
+        <form action="/dashboard/item-delete/<%= noteID %>?_method=DELETE" method="POST">
+
+          <button type="submit" class="btn btn-danger">
+            Delete
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
