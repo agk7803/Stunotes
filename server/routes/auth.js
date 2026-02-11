@@ -43,7 +43,7 @@ router.get(
 
 // Retrieve user data
 router.get(
-  "/google/callback",
+  "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/login-failure",
     successRedirect: "/dashboard",
@@ -58,7 +58,7 @@ router.get('/login-failure', (req, res) => {
 // Destroy user session
 router.get('/logout', (req, res) => {
   req.session.destroy(error => {
-    if(error) {
+    if (error) {
       console.log(error);
       res.send('Error loggin out');
     } else {

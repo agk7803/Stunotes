@@ -5,7 +5,7 @@ const { isLoggedIn } = require("../middleware/checkAuth");
 const dashboardController = require("../controllers/dashboardController");
 
 // 📎 Upload middleware
-const upload = require("../upload.js");
+const upload = require("../routes/upload.js");
 
 
 /**
